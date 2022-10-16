@@ -23,6 +23,6 @@
 hs_err_pid*
 replay_pid*
 
-# Ignore idea config file
+# Ignore config file
 .idea
-src/main/resources/static/fontawesome/all.css
+target
