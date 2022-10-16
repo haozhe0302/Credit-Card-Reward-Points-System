@@ -3,13 +3,12 @@ package com.creditcard.rewardpoints;
 import com.creditcard.entity.Reward;
 import org.springframework.stereotype.Service;
 
-import java.time.*;
 import java.util.*;
 
 @Service
 public class RewardService {
 
-    public Reward findMaxReward (YearMonth month, Integer sportsAmount, Integer timAmount, Integer subwayAmount) {
+    public Reward findMaxReward (String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount) {
         /*
         Calculate the maximum reward points customer could get monthly by dynamic programming
 
@@ -132,10 +131,10 @@ public class RewardService {
             subwayPoints += subwayLeftoverPoints;
         }
 
-        // Pass calculation results to reward
+        // Pass calculation results to reward object
         Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num);
 
-        // Output console test
+        // Test Use: output console display
         System.out.println("-------------------");
         System.out.println("Month: " + month.toString());
 

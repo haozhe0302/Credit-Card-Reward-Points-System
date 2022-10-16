@@ -1,10 +1,9 @@
 package com.creditcard.entity;
 
-import java.time.YearMonth;
 import java.util.*;
 
 public class Reward {
-    private YearMonth month;
+    private String month;
 
     private Integer sportsAmount;
     private Integer timAmount;
@@ -22,7 +21,7 @@ public class Reward {
     // Constructor
     public Reward(){}
 
-    public Reward(YearMonth month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
+    public Reward(String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
         this.month = month;
 
         this.sportsAmount = sportsAmount;
@@ -40,7 +39,7 @@ public class Reward {
     }
 
     // Getter
-    public YearMonth getMonth() {
+    public String getMonth() {
         return month;
     }
 
@@ -105,7 +104,7 @@ public class Reward {
     }
 
     // Setter
-    public void setMonth(YearMonth month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

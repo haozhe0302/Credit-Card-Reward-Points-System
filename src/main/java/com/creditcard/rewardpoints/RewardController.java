@@ -5,7 +5,6 @@ import com.creditcard.entity.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.time.YearMonth;
 import java.util.*;
 
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -33,12 +32,15 @@ public class RewardController {
                 int sportsAmount = 0;
                 int timAmount = 0;
                 int subwayAmount = 0;
-                // List<String> dateByMonth = new ArrayList<>();
+                HashSet<String> dateByMonth = new HashSet<>();
 
                 // Sum the monthly purchase amount for each merchant
                 for (Transactions transaction : transactionHistory) {
                     String merchantCode = transaction.getMerchantCode();
-                    // dateByMonth.(transaction.getDate().substring(0, 10));
+
+                    // Distract date to yyyy/MM format
+                    String[] dateSplit = transaction.getDate().split("/");
+                    dateByMonth.add(dateSplit[0] + "/" + dateSplit[1]);
 
                     switch (merchantCode) {
                         case "sportcheck":
@@ -54,12 +56,17 @@ public class RewardController {
                 }
 
                 System.out.println("-------------------");
-                System.out.println(sportsAmount);
-                System.out.println(timAmount);
-                System.out.println(subwayAmount);
+                System.out.println("Sports Total Amount:" + sportsAmount);
+                System.out.println("Tim Total Amount:" + timAmount);
+                System.out.println("Subway Total Amount:" + subwayAmount);
 
-                YearMonth month = YearMonth.parse("2022-10");
-                Reward reward = rewardService.findMaxReward(month, sportsAmount, timAmount, subwayAmount);
+                // Temporarily only one single month of transaction data is allowed. If not, raise warning to the user
+                if (dateByMonth.size() != 1) {
+                    System.out.println("dateByMonth.size() != 1");
+                } else {
+                    Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount);
+                }
+
 
             } catch (Exception ex) {
                 model.addAttribute("message", "An error occurred while processing the CSV file.");
