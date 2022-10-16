@@ -5,25 +5,25 @@ import java.util.*;
 public class Reward {
     private Date month;
     private Integer sportsPoints;
-    private Integer timsPoints;
+    private Integer timPoints;
     private Integer subwayPoints;
     private Integer sportsLeftoverPoints;
-    private Integer timsLeftoverPoints;
+    private Integer timLeftoverPoints;
     private Integer subwayLeftoverPoints;
     private Integer totalPoints;
 
     // Constructor
     public Reward(){}
 
-    public Reward(Date month, Integer sportsPoints, Integer timsPoints, Integer subwayPoints, Integer sportsLeftoverPoints, Integer timsLeftoverPoints, Integer subwayLeftoverPoints) {
+    public Reward(Date month, Integer sportsPoints, Integer timPoints, Integer subwayPoints, Integer sportsLeftoverPoints, Integer timLeftoverPoints, Integer subwayLeftoverPoints) {
         this.month = month;
         this.sportsPoints = sportsPoints;
-        this.timsPoints = timsPoints;
+        this.timPoints = timPoints;
         this.subwayPoints = subwayPoints;
         this.sportsLeftoverPoints = sportsLeftoverPoints;
-        this.timsLeftoverPoints = timsLeftoverPoints;
+        this.timLeftoverPoints = timLeftoverPoints;
         this.subwayLeftoverPoints = subwayLeftoverPoints;
-        this.totalPoints = sportsPoints + timsPoints + subwayPoints + sportsLeftoverPoints + timsLeftoverPoints + subwayLeftoverPoints;
+        this.totalPoints = sportsPoints + timPoints + subwayPoints + sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints;
     }
 
     // Getter
@@ -35,8 +35,8 @@ public class Reward {
         return sportsPoints;
     }
 
-    public Integer getTimsPoints() {
-        return timsPoints;
+    public Integer getTimPoints() {
+        return timPoints;
     }
 
     public Integer getSubwayPoints() {
@@ -47,8 +47,8 @@ public class Reward {
         return sportsLeftoverPoints;
     }
 
-    public Integer getTimsLeftoverPoints() {
-        return timsLeftoverPoints;
+    public Integer getTimLeftoverPoints() {
+        return timLeftoverPoints;
     }
 
     public Integer getSubwayLeftoverPoints() {
@@ -68,8 +68,8 @@ public class Reward {
         this.sportsPoints = sportsPoints;
     }
 
-    public void setTimsPoints(Integer timsPoints) {
-        this.timsPoints = timsPoints;
+    public void setTimPoints(Integer timPoints) {
+        this.timPoints = timPoints;
     }
 
     public void setSubwayPoints(Integer subwayPoints) {
@@ -80,8 +80,8 @@ public class Reward {
         this.sportsLeftoverPoints = sportsLeftoverPoints;
     }
 
-    public void setTimsLeftoverPoints(Integer timsLeftoverPoints) {
-        this.timsLeftoverPoints = timsLeftoverPoints;
+    public void setTimLeftoverPoints(Integer timLeftoverPoints) {
+        this.timLeftoverPoints = timLeftoverPoints;
     }
 
     public void setSubwayLeftoverPoints(Integer subwayLeftoverPoints) {
