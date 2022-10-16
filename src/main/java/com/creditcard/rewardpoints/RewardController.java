@@ -34,15 +34,13 @@ public class RewardController {
                 int subwayAmount = 0;
                 HashSet<String> dateByMonth = new HashSet<>();
 
-                // Sum the monthly purchase amount for each merchant
                 for (Transactions transaction : transactionHistory) {
-                    String merchantCode = transaction.getMerchantCode();
-
                     // Distract date to yyyy/MM format
                     String[] dateSplit = transaction.getDate().split("/");
                     dateByMonth.add(dateSplit[0] + "/" + dateSplit[1]);
 
-                    switch (merchantCode) {
+                    // Sum the monthly purchase amount for each merchant
+                    switch (transaction.getMerchantCode()) {
                         case "sportcheck":
                             sportsAmount += transaction.getAmountCents();
                             break;
@@ -63,11 +61,26 @@ public class RewardController {
                 // Temporarily only one single month of transaction data is allowed. If not, raise warning to the user
                 if (dateByMonth.size() != 1) {
                     System.out.println("dateByMonth.size() != 1");
+                    // TODO: Return to home page and raise warning message to user
                 } else {
                     Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount);
+
+                    // Calculate points contribution for each transaction
+                    for (Transactions transaction : transactionHistory) {
+                        switch (transaction.getMerchantCode()) {
+                            case "sportcheck":
+                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
+                                break;
+                            case "tim_hortons":
+                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getTimAvgPointsRate())/100);
+                                break;
+                            case "subway":
+                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
+                                break;
+                        }
+                    }
+
                 }
-
-
             } catch (Exception ex) {
                 model.addAttribute("message", "An error occurred while processing the CSV file.");
                 model.addAttribute("status", false);
