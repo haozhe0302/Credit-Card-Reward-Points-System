@@ -25,3 +25,4 @@ replay_pid*
 
 # Ignore idea config file
 .idea
+src/main/resources/static/fontawesome/all.css
