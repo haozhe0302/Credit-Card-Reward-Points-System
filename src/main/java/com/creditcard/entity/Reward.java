@@ -1,94 +1,102 @@
 package com.creditcard.entity;
 
+import java.time.YearMonth;
 import java.util.*;
 
 public class Reward {
-    private Date month;
-    private Integer sportsPoints;
-    private Integer timPoints;
-    private Integer subwayPoints;
-    private Integer sportsLeftoverPoints;
-    private Integer timLeftoverPoints;
-    private Integer subwayLeftoverPoints;
-    private Integer totalPoints;
+    private YearMonth month;
+    private Float sportsPoints;
+    private Float timPoints;
+    private Float subwayPoints;
+
+    private Integer rule1Num;
+    private Integer rule2Num;
+    private Integer rule4Num;
+    private Integer rule6Num;
 
     // Constructor
     public Reward(){}
 
-    public Reward(Date month, Integer sportsPoints, Integer timPoints, Integer subwayPoints, Integer sportsLeftoverPoints, Integer timLeftoverPoints, Integer subwayLeftoverPoints) {
+    public Reward(YearMonth month, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
         this.month = month;
+
         this.sportsPoints = sportsPoints;
         this.timPoints = timPoints;
         this.subwayPoints = subwayPoints;
-        this.sportsLeftoverPoints = sportsLeftoverPoints;
-        this.timLeftoverPoints = timLeftoverPoints;
-        this.subwayLeftoverPoints = subwayLeftoverPoints;
-        this.totalPoints = sportsPoints + timPoints + subwayPoints + sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints;
+
+        this.rule1Num = rule1Num;
+        this.rule2Num = rule2Num;
+        this.rule4Num = rule4Num;
+        this.rule6Num = rule6Num;
     }
 
     // Getter
-    public Date getMonth() {
+    public YearMonth getMonth() {
         return month;
     }
 
-    public Integer getSportsPoints() {
+    public Float getSportsPoints() {
         return sportsPoints;
     }
 
-    public Integer getTimPoints() {
+    public Float getTimPoints() {
         return timPoints;
     }
 
-    public Integer getSubwayPoints() {
+    public Float getSubwayPoints() {
         return subwayPoints;
     }
 
-    public Integer getSportsLeftoverPoints() {
-        return sportsLeftoverPoints;
+    public Float getTotalPoints() {
+        return sportsPoints + timPoints + subwayPoints;
     }
 
-    public Integer getTimLeftoverPoints() {
-        return timLeftoverPoints;
+    public Integer getRule1Num() {
+        return rule1Num;
     }
 
-    public Integer getSubwayLeftoverPoints() {
-        return subwayLeftoverPoints;
+    public Integer getRule2Num() {
+        return rule2Num;
     }
 
-    public Integer getTotalPoints() {
-        return totalPoints;
+    public Integer getRule4Num() {
+        return rule4Num;
+    }
+
+    public Integer getRule6Num() {
+        return rule6Num;
     }
 
     // Setter
-    public void setMonth(Date month) {
+    public void setMonth(YearMonth month) {
         this.month = month;
     }
 
-    public void setSportsPoints(Integer sportsPoints) {
+    public void setSportsPoints(Float sportsPoints) {
         this.sportsPoints = sportsPoints;
     }
 
-    public void setTimPoints(Integer timPoints) {
+    public void setTimPoints(Float timPoints) {
         this.timPoints = timPoints;
     }
 
-    public void setSubwayPoints(Integer subwayPoints) {
+    public void setSubwayPoints(Float subwayPoints) {
         this.subwayPoints = subwayPoints;
     }
 
-    public void setSportsLeftoverPoints(Integer sportsLeftoverPoints) {
-        this.sportsLeftoverPoints = sportsLeftoverPoints;
+    public void setRule1Num(Integer rule1Num) {
+        this.rule1Num = rule1Num;
     }
 
-    public void setTimLeftoverPoints(Integer timLeftoverPoints) {
-        this.timLeftoverPoints = timLeftoverPoints;
+    public void setRule2Num(Integer rule2Num) {
+        this.rule2Num = rule2Num;
     }
 
-    public void setSubwayLeftoverPoints(Integer subwayLeftoverPoints) {
-        this.subwayLeftoverPoints = subwayLeftoverPoints;
+    public void setRule4Num(Integer rule4Num) {
+        this.rule4Num = rule4Num;
     }
 
-    public void setTotalPoints(Integer totalPoints) {
-        this.totalPoints = totalPoints;
+    public void setRule6Num(Integer rule6Num) {
+        this.rule6Num = rule6Num;
     }
 }

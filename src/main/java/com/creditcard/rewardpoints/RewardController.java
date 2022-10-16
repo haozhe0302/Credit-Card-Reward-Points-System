@@ -19,7 +19,7 @@ public class RewardController {
 
         YearMonth month = YearMonth.parse("2022-10");
 
-        Reward reward = rewardService.findMaxReward(month, 2500, 1000, 510);
+        Reward reward = rewardService.findMaxReward(month, 19500, 6000, 3500);
 
         return "reward_points_details";
     }
