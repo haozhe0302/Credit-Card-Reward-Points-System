@@ -133,15 +133,7 @@ public class RewardService {
         }
 
         // Pass calculation results to reward
-        Reward reward = new Reward();
-        reward.setMonth(month);
-        reward.setSportsPoints(sportsPoints);
-        reward.setTimPoints(timPoints);
-        reward.setSubwayPoints(subwayPoints);
-        reward.setRule1Num(rule1Num);
-        reward.setRule2Num(rule2Num);
-        reward.setRule4Num(rule4Num);
-        reward.setRule6Num(rule6Num);
+        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num);
 
         // Output console test
         System.out.println("-------------------");

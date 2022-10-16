@@ -53,6 +53,7 @@ public class RewardController {
                     }
                 }
 
+                System.out.println("-------------------");
                 System.out.println(sportsAmount);
                 System.out.println(timAmount);
                 System.out.println(subwayAmount);

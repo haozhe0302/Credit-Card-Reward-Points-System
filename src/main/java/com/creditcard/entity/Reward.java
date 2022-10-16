@@ -5,6 +5,11 @@ import java.util.*;
 
 public class Reward {
     private YearMonth month;
+
+    private Integer sportsAmount;
+    private Integer timAmount;
+    private Integer subwayAmount;
+
     private Float sportsPoints;
     private Float timPoints;
     private Float subwayPoints;
@@ -17,8 +22,12 @@ public class Reward {
     // Constructor
     public Reward(){}
 
-    public Reward(YearMonth month, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
+    public Reward(YearMonth month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
         this.month = month;
+
+        this.sportsAmount = sportsAmount;
+        this.timAmount = timAmount;
+        this.subwayAmount = subwayAmount;
 
         this.sportsPoints = sportsPoints;
         this.timPoints = timPoints;
@@ -35,6 +44,18 @@ public class Reward {
         return month;
     }
 
+    public Integer getSportsAmount() {
+        return sportsAmount;
+    }
+
+    public Integer getTimAmount() {
+        return timAmount;
+    }
+
+    public Integer getSubwayAmount() {
+        return subwayAmount;
+    }
+
     public Float getSportsPoints() {
         return sportsPoints;
     }
@@ -49,6 +70,22 @@ public class Reward {
 
     public Float getTotalPoints() {
         return sportsPoints + timPoints + subwayPoints;
+    }
+
+    public Float getSportsAvgPointsRate() {
+        return sportsPoints/(float) sportsAmount;
+    }
+
+    public Float getTimAvgPointsRate() {
+        return timPoints/(float) timAmount;
+    }
+
+    public Float getTotalAvgPointsRate() {
+        return subwayPoints/(float) subwayAmount;
+    }
+
+    public Float getSubwayAvgPointsRate() {
+        return (sportsPoints + timPoints + subwayPoints)/(float) (sportsAmount + timAmount + subwayAmount);
     }
 
     public Integer getRule1Num() {
@@ -70,6 +107,18 @@ public class Reward {
     // Setter
     public void setMonth(YearMonth month) {
         this.month = month;
+    }
+
+    public void setSportsAmount(Integer sportsAmount) {
+        this.sportsAmount = sportsAmount;
+    }
+
+    public void setTimAmount(Integer timAmount) {
+        this.timAmount = timAmount;
+    }
+
+    public void setSubwayAmount(Integer subwayAmount) {
+        this.subwayAmount = subwayAmount;
     }
 
     public void setSportsPoints(Float sportsPoints) {
