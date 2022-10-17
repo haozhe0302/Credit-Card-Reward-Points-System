@@ -24,13 +24,14 @@ public class RewardController {
     private TransactionService transactionService;
 
     @PostMapping("/details")
-    public String rewardDetails(@RequestParam("file") MultipartFile file, Model model) {
+    public String viewRewardDetails(@RequestParam("file") MultipartFile file, Model model) {
         // Validate file
         if (!file.isEmpty()) {
             try {
                 Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 List<Transaction> transactionHistory = new CsvToBeanBuilder<Transaction>(reader).withType(Transaction.class).build().parse();
 
+                // Distract the month yyyy/MM from transactionHistory date yyyy/MM/dd
                 HashSet<String> dateByMonth = transactionService.dateToMonth(transactionHistory);
 
                 List<Integer> amountInCategory = transactionService.amountCountByCategory(transactionHistory);

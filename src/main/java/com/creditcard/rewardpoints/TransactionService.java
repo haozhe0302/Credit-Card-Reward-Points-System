@@ -8,6 +8,15 @@ import java.util.*;
 @Service
 public class TransactionService {
     public HashSet<String> dateToMonth (List<Transaction> transactionHistory) {
+        /*
+        Distract the month yyyy/MM from transactionHistory date yyyy/MM/dd
+
+        Args:
+            transactionHistory: Customer Transaction History, which is a list of all individual transaction info
+
+        Returns:
+            dateByMonth: HahSet which contains all the months appear in the transaction history
+         */
         HashSet<String> dateByMonth = new HashSet<>();
 
         for (Transaction transaction : transactionHistory) {
@@ -20,6 +29,15 @@ public class TransactionService {
     }
 
     public List<Integer> amountCountByCategory (List<Transaction> transactionHistory) {
+        /*
+        Sum the total amount of each merchant of the 3 and others
+
+        Args:
+            transactionHistory: Customer Transaction History, which is a list of all individual transaction info
+
+        Returns:
+            amountByCategory: List contains the total amount of each merchant of the 3 and others
+         */
         int sportsAmount = 0;
         int timAmount = 0;
         int subwayAmount = 0;
@@ -52,7 +70,16 @@ public class TransactionService {
     }
 
     public List<Transaction> setPointsForEachTransaction (List<Transaction> transactionHistory, Reward reward) {
-        // Calculate points contribution for each transaction
+        /*
+        Calculate points contribution for each transaction and pass them to transactionHistory
+
+        Args:
+            transactionHistory: Customer Transaction History, which is a list of all individual transaction info
+            reward: Monthly reward points details
+        Returns:
+            transactionHistory: Customer Transaction History, which is a list of all individual transaction info
+            Note: Points contribution for each transaction are added.
+         */
         for (Transaction transaction : transactionHistory) {
             switch (transaction.getMerchantCode()) {
                 case "sportcheck":
