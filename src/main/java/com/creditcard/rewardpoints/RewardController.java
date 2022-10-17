@@ -34,6 +34,7 @@ public class RewardController {
                 // Distract the month yyyy/MM from transactionHistory date yyyy/MM/dd
                 HashSet<String> dateByMonth = transactionService.dateToMonth(transactionHistory);
 
+                // Sum the total amount of each merchant of the 3 and others
                 List<Integer> amountInCategory = transactionService.amountCountByCategory(transactionHistory);
                 int sportsAmount = amountInCategory.get(0);
                 int timAmount = amountInCategory.get(1);

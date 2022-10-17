@@ -44,7 +44,6 @@ public class TransactionService {
         int otherAmount = 0;
 
         for (Transaction transaction : transactionHistory) {
-            // Sum the monthly purchase amount for each merchant
             switch (transaction.getMerchantCode()) {
                 case "sportcheck":
                     sportsAmount += transaction.getAmountCents();
