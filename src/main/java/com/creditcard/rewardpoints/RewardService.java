@@ -111,6 +111,7 @@ public class RewardService {
         float timLeftoverPoints = (float) (timAmount/100 - 5 * timUsedCapacity);
         float subwayLeftoverPoints = (float) (subwayAmount/100 - 5 * subwayUsedCapacity);
         int finalLeftoverPoint = ((sportsAmount + timAmount + subwayAmount - 500 * (sportsUsedCapacity + timUsedCapacity + subwayUsedCapacity)) - (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints) * 100)/100;
+        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + finalLeftoverPoint);
 
         // Decide where we should place the finalLeftoverPoint
         if (sportsPoints > 0 || sportsLeftoverPoints > 0) {
@@ -132,7 +133,7 @@ public class RewardService {
         }
 
         // Pass calculation results to reward object
-        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num);
+        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num, rule7Num);
 
         // Test Use: output console display
         System.out.println("-------------------");

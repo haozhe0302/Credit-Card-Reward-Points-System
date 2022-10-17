@@ -13,12 +13,30 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <br>
+    <br><br><br>
     <div class="border border-secondary rounded p-3" style="width: 60%; max-width: 1000px; min-width: 625px; margin: 0 auto">
-        <p><b>Your Reward Points Details</b></p>
-
+        <h2>Your Reward Points Details</h2>
+        <!-- Display Reward Info -->
         <div  style="width: 80%; min-width: 500px; margin: 0 auto">
-            <!--display users list-->
+            <p>Month: [[${dateByMonth}]]</p>
+            <h3>Total Reward Points: [[${dateByMonth}]]</h3>
+            <h4>Reward Contribution</h4>
+            <p>Sports Check: [[${dateByMonth}]]      Tim Hortons: [[${dateByMonth}]]     Subway: [[${dateByMonth}]]</p>
+            <h4>Promotion Applied</h4>
+            <p>Rule 1: 500 points for every $75 spend at Sport Check, $25 spend at Tim Hortons and $25 spend at Subway</p>
+            <p>Promotion Applied x [[${dateByMonth}]]</p>
+            <p>Rule 2: 300 points for every $75 spend at Sport Check and $25 spend at Tim Hortons</p>
+            <p>Promotion Applied x [[${dateByMonth}]]</p>
+            <p>Rule 4: 150 points for every $25 spend at Sport Check, $10 spend at Tim Hortons and $10 spend at Subway</p>
+            <p>Promotion Applied x [[${dateByMonth}]]</p>
+            <p>Rule 6: 75 point for every $20 spend at Sport Check</p>
+            <p>Promotion Applied x [[${dateByMonth}]]</p>
+            <p>Rule 7: 1 points for every $1 spend for all other purchases (including leftover amount)</p>
+            <p>Promotion Applied x [[${dateByMonth}]]</p>
+        </div>
+
+        <!-- Display Transaction Info -->
+        <div  style="width: 80%; min-width: 500px; margin: 0 auto">
             <table class="table table-striped table-hover table-responsive-xl">
                 <thead class="table-dark">
                 <tr>

@@ -80,6 +80,7 @@ public class RewardController {
                         }
                     }
 
+                    model.addAttribute("dateByMonth", reward.getMonth());
                     model.addAttribute("transactionHistory", transactionHistory);
                     return "reward_points_details";
                 }

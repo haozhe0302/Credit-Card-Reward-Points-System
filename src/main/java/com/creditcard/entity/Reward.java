@@ -17,11 +17,12 @@ public class Reward {
     private Integer rule2Num;
     private Integer rule4Num;
     private Integer rule6Num;
+    private Integer rule7Num;
 
     // Constructor
     public Reward(){}
 
-    public Reward(String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num) {
+    public Reward(String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num, Integer rule7Num) {
         this.month = month;
 
         this.sportsAmount = sportsAmount;
@@ -36,6 +37,7 @@ public class Reward {
         this.rule2Num = rule2Num;
         this.rule4Num = rule4Num;
         this.rule6Num = rule6Num;
+        this.rule7Num = rule7Num;
     }
 
     // Getter
@@ -101,6 +103,10 @@ public class Reward {
         return rule6Num;
     }
 
+    public Integer getRule7Num() {
+        return rule6Num;
+    }
+
     // Setter
     public void setMonth(String month) {
         this.month = month;
@@ -144,5 +150,9 @@ public class Reward {
 
     public void setRule6Num(Integer rule6Num) {
         this.rule6Num = rule6Num;
+    }
+
+    public void setRule7Num(Integer rule7Num) {
+        this.rule6Num = rule7Num;
     }
 }
