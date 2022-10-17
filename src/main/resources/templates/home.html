@@ -14,11 +14,11 @@
 <body>
 <div class="container-fluid text-center">
     <br><br><br>
-    <div class="border border-secondary rounded p-3" style="width: 600px; margin: 0 auto;">
+    <div class="border border-secondary rounded p-3 bg-light" style="width: 600px; margin: 0 auto;">
         <form th:action="@{/details}"  method="post" enctype="multipart/form-data">
-                <p><b>Reward Points System</b></p>
-                <p>Upload customer transaction history csv file here!</p>
-                <p>Please make sure the csv is well formatted.</p>
+                <h2 class="text-primary"><b>Reward Points System</b></h2>
+                <p>Upload customer transaction history <b>csv</b> file here!</p>
+                <p>Please make sure the csv is <b>well formatted</b>.</p>
                 <input type="file" name="file" accept=".csv" required/><br>
                 <input type="submit" value="Submit" class="btn btn-primary m-3"/>
         </form>

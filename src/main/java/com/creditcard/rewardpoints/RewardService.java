@@ -57,17 +57,48 @@ public class RewardService {
         // dp[rule][sc][th][sw][]: For number of fist 'rule' rules applied, sc = sports capacity left, th = tim horton capacity left, sw = subway capacity left
         // There is an array [points, r1, r2, r3, r4], which points represent the maximum reward points
         // r1, r2, r3, r4 refer to the number of each rule (1, 2, 4, 6) that applied
-        int[][][][][] dp = new int[ruleNum + 1][sportsCapacity + 1][timCapacity + 1][subwayCapacity + 1][ruleNum + 1];
+
+        // Previous dp code. Deprecated. The current optimised method could save 60% of memory consumption
+        // int[][][][][] dp = new int[ruleNum + 1][sportsCapacity + 1][timCapacity + 1][subwayCapacity + 1][ruleNum + 1];
+        int[][][][] dp = new int[sportsCapacity + 1][timCapacity + 1][subwayCapacity + 1][ruleNum + 1];
+        int[][][][] preDp = new int[sportsCapacity + 1][timCapacity + 1][subwayCapacity + 1][ruleNum + 1];
 
         // Initialize dp
         // If there is no rule applied, obviously the reward points would all be 0 no matter what capacities are
         for (int sc = 0; sc <= sportsCapacity; sc ++) {
             for (int th = 0; th <= timCapacity; th ++) {
                 for (int sw = 0; sw <= subwayCapacity; sw ++) {
-                    Arrays.fill(dp[0][sc][th][sw], 0);
+                    Arrays.fill(preDp[sc][th][sw], 0);
                 }
             }
         }
+
+        // Previous dp code. Deprecated. The current optimised method could save 60% of memory consumption
+//        for (int rule = 1; rule <= ruleNum; rule ++) {
+//            for (int sc = 0; sc <= sportsCapacity; sc ++) {
+//                for (int th = 0; th <= timCapacity; th ++) {
+//                    for (int sw = 0; sw <= subwayCapacity; sw ++) {
+//                        dp[rule][sc][th][sw] = dp[rule - 1][sc][th][sw];
+//
+//                        if (sc >= consumption[rule][0] && th >= consumption[rule][1] && sw >= consumption[rule][2]) {
+//                            // dp[rule][sc][th][sw] = Math.max(dp[rule - 1][sc][th][sw], dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]] + points[rule]);
+//                            if (dp[rule - 1][sc][th][sw][0] < dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule]) {
+//                                dp[rule][sc][th][sw][0] = dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule];
+//                                dp[rule][sc][th][sw][rule] = dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][rule] + 1;
+//
+//                                // When maximum reward points is found, record the dp index
+//                                if (dp[rule][sc][th][sw][0] > maxPoints) {
+//                                    maxPoints = dp[rule][sc][th][sw][0];
+//                                    sportsUsedCapacity = sc;
+//                                    timUsedCapacity = th;
+//                                    subwayUsedCapacity = sw;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         // Dynamic programming
         // Time Complexity: O(NXYZ), where N = number of rules, X = total transaction amount in Sport Check, Y = total transaction amount in Tim Hortons, Z = total transaction amount in Subway
@@ -77,17 +108,16 @@ public class RewardService {
             for (int sc = 0; sc <= sportsCapacity; sc ++) {
                 for (int th = 0; th <= timCapacity; th ++) {
                     for (int sw = 0; sw <= subwayCapacity; sw ++) {
-                        dp[rule][sc][th][sw] = dp[rule - 1][sc][th][sw];
+                        dp[sc][th][sw] = preDp[sc][th][sw];
 
                         if (sc >= consumption[rule][0] && th >= consumption[rule][1] && sw >= consumption[rule][2]) {
-                            // dp[rule][sc][th][sw] = Math.max(dp[rule - 1][sc][th][sw], dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]] + points[rule]);
-                            if (dp[rule - 1][sc][th][sw][0] < dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule]) {
-                                dp[rule][sc][th][sw][0] = dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule];
-                                dp[rule][sc][th][sw][rule] = dp[rule][sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][rule] + 1;
+                            if (preDp[sc][th][sw][0] < dp[sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule]) {
+                                dp[sc][th][sw][0] = dp[sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][0] + points[rule];
+                                dp[sc][th][sw][rule] = dp[sc - consumption[rule][0]][th - consumption[rule][1]][sw - consumption[rule][2]][rule] + 1;
 
                                 // When maximum reward points is found, record the dp index
-                                if (dp[rule][sc][th][sw][0] > maxPoints) {
-                                    maxPoints = dp[rule][sc][th][sw][0];
+                                if (dp[sc][th][sw][0] > maxPoints) {
+                                    maxPoints = dp[sc][th][sw][0];
                                     sportsUsedCapacity = sc;
                                     timUsedCapacity = th;
                                     subwayUsedCapacity = sw;
@@ -99,10 +129,10 @@ public class RewardService {
             }
         }
 
-        int rule1Num = dp[ruleNum][sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][1];
-        int rule2Num = dp[ruleNum][sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][2];
-        int rule4Num = dp[ruleNum][sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][3];
-        int rule6Num = dp[ruleNum][sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][4];
+        int rule1Num = dp[sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][1];
+        int rule2Num = dp[sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][2];
+        int rule4Num = dp[sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][3];
+        int rule6Num = dp[sportsUsedCapacity][timUsedCapacity][subwayUsedCapacity][4];
 
         float sportsPoints = rule1Num * merchantPoints[1][0] + rule2Num * merchantPoints[2][0] + rule4Num * merchantPoints[3][0] + rule6Num * merchantPoints[4][0];
         float timPoints = rule1Num * merchantPoints[1][1] + rule2Num * merchantPoints[2][1] + rule4Num * merchantPoints[3][1] + rule6Num * merchantPoints[4][1];
