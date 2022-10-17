@@ -15,11 +15,11 @@
 <div class="container-fluid text-center">
     <br>
     <div class="border border-secondary rounded p-3 bg-light" style="width: 75%; max-width: 1600px; min-width: 625px; margin: 0 auto">
-        <h2 class="text-primary"><b>Your Reward Points Details</b></h2>
+        <h2 class="text-primary"><b>Your Monthly Reward Points Details</b></h2>
         <!-- Display Reward Info -->
         <div  style="width: 80%; min-width: 500px; margin: 0 auto">
             <p>Month: [[${reward.month}]]</p>
-            <h3 class="text-danger">Total Reward Points: [[${totalPoints}]]</h3><br>
+            <h3 class="text-danger">Total Reward Points: <b>[[${totalPoints}]]</b></h3><br>
             <h5 class="text-primary">Reward Contribution</h5>
             <p>Sports Check: [[${sportsPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Tim Hortons: [[${timPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Subway: [[${subwayPoints}]]</p>
 
@@ -29,34 +29,34 @@
                     <tr>
                         <th>Rule</th>
                         <th>Description</th>
-                        <th>No.</th>
+                        <th>No. Applied</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr th:if="${reward.rule1Num > 0}">
                         <td>1</td>
                         <td>500 points for every $75 spend at Sport Check, $25 spend at Tim Hortons and $25 spend at Subway</td>
-                        <td>[[${reward.rule1Num}]]</td>
+                        <td><b>[[${reward.rule1Num}]]</b></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${reward.rule2Num > 0}">
                         <td>2</td>
                         <td>300 points for every $75 spend at Sport Check and $25 spend at Tim Hortons</td>
-                        <td>[[${reward.rule2Num}]]</td>
+                        <td><b>[[${reward.rule2Num}]]</b></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${reward.rule4Num > 0}">
                         <td>4</td>
                         <td>150 points for every $25 spend at Sport Check, $10 spend at Tim Hortons and $10 spend at Subway</td>
-                        <td>[[${reward.rule4Num}]]</td>
+                        <td><b>[[${reward.rule4Num}]]</b></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${reward.rule6Num > 0}">
                         <td>6</td>
                         <td>75 point for every $20 spend at Sport Check</td>
-                        <td>[[${reward.rule6Num}]]</td>
+                        <td><b>[[${reward.rule6Num}]]</b></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${reward.rule7Num > 0}">
                         <td>7</td>
                         <td>1 points for every $1 spend for all other purchases (including leftover amount)</td>
-                        <td>[[${reward.rule7Num}]]</td>
+                        <td><b>[[${reward.rule7Num}]]</b></td>
                     </tr>
                 </tbody>
             </table>
@@ -80,7 +80,7 @@
                         <td th:text="${transaction.date}"></td>
                         <td th:text="${transaction.merchantCode}"></td>
                         <td th:text="${transaction.amountCents}"></td>
-                        <td th:text="${transaction.rewardPoints}"></td>
+                        <td th:text="${transaction.rewardPoints}" style="font-weight:bold"></td>
                     </tr>
                 </tbody>
             </table>
