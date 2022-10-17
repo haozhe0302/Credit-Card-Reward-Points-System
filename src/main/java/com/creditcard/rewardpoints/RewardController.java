@@ -31,6 +31,7 @@ public class RewardController {
                 int sportsAmount = 0;
                 int timAmount = 0;
                 int subwayAmount = 0;
+                int otherAmount = 0;
                 HashSet<String> dateByMonth = new HashSet<>();
 
                 for (Transactions transaction : transactionHistory) {
@@ -49,6 +50,8 @@ public class RewardController {
                         case "subway":
                             subwayAmount += transaction.getAmountCents();
                             break;
+                        default:
+                            otherAmount += transaction.getAmountCents();
                     }
                 }
 
@@ -62,7 +65,7 @@ public class RewardController {
                     System.out.println("Warnig: dateByMonth.size() != 1");
                     // TODO: Return to home page and raise warning message to user
                 } else {
-                    Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount);
+                    Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount, otherAmount);
 
                     // Calculate points contribution for each transaction
                     for (Transactions transaction : transactionHistory) {
@@ -76,25 +79,17 @@ public class RewardController {
                             case "subway":
                                 transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
                                 break;
+                            default:
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getOtherAvgPointsRate())/100);
                         }
                     }
-
-//                    model.addAttribute("dateByMonth", reward.getMonth());
-//                    model.addAttribute("totalPoints", reward.getTotalPoints());
-//                    model.addAttribute("sportsPoints", reward.getSportsPoints());
-//                    model.addAttribute("timPoints", reward.getTimPoints());
-//                    model.addAttribute("subwayPoints", reward.getSubwayPoints());
-//                    model.addAttribute("rule1Num", reward.getRule1Num());
-//                    model.addAttribute("rule2Num", reward.getRule2Num());
-//                    model.addAttribute("rule4Num", reward.getRule4Num());
-//                    model.addAttribute("rule6Num", reward.getRule6Num());
-//                    model.addAttribute("rule7Num", reward.getRule7Num());
 
                     model.addAttribute("reward", reward);
                     model.addAttribute("totalPoints", reward.getTotalPoints());
                     model.addAttribute("sportsPoints", reward.getSportsPoints());
                     model.addAttribute("timPoints", reward.getTimPoints());
                     model.addAttribute("subwayPoints", reward.getSubwayPoints());
+                    model.addAttribute("otherPoints", reward.getOtherPoints());
                     model.addAttribute("transactionHistory", transactionHistory);
                     return "reward_points_details";
                 }

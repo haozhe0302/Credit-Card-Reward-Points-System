@@ -8,7 +8,7 @@ import java.util.*;
 @Service
 public class RewardService {
 
-    public Reward findMaxReward (String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount) {
+    public Reward findMaxReward (String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Integer otherAmount) {
         /*
         Calculate the maximum reward points customer could get monthly by dynamic programming
 
@@ -141,7 +141,7 @@ public class RewardService {
         float timLeftoverPoints = (float) (timAmount/100 - 5 * timUsedCapacity);
         float subwayLeftoverPoints = (float) (subwayAmount/100 - 5 * subwayUsedCapacity);
         int finalLeftoverPoint = ((sportsAmount + timAmount + subwayAmount - 500 * (sportsUsedCapacity + timUsedCapacity + subwayUsedCapacity)) - (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints) * 100)/100;
-        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + finalLeftoverPoint);
+        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + finalLeftoverPoint + otherAmount/100);
 
         // Decide where we should place the finalLeftoverPoint
         if (sportsPoints > 0 || sportsLeftoverPoints > 0) {
@@ -163,7 +163,7 @@ public class RewardService {
         }
 
         // Pass calculation results to reward object
-        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num, rule7Num);
+        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, otherAmount,sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num, rule7Num);
 
         // Test Use: output console display
         System.out.println("-------------------");
@@ -193,6 +193,7 @@ public class RewardService {
         System.out.println("Sports Points: " + sportsPoints);
         System.out.println("Tim Points: " + timPoints);
         System.out.println("Subway Points: " + subwayPoints);
+        System.out.println("Other Points: " + reward.getOtherPoints());
         System.out.println("Total Points: " + reward.getTotalPoints());
         System.out.println("-------------------");
 
