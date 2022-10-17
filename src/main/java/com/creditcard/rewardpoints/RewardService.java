@@ -7,16 +7,16 @@ import java.util.*;
 
 @Service
 public class RewardService {
-
     public Reward findMaxReward (String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Integer otherAmount) {
         /*
         Calculate the maximum reward points customer could get monthly by dynamic programming
 
         Args:
-            Customer total monthly purchase amount from 3 companies (unit: cent)
+            Transaction date in month, customer total monthly purchase amount from 3 merchants and other merchant (unit: cent)
 
         Returns:
-            Reward Class contains points owned by Rule 1, 2, 4, 6, and the leftover points owned by Rule 7
+            Reward Class contains points gained by Rule 1, 2, 4, 6, the leftover points owned by Rule 7,
+            transaction date in month, the number of times of each rule applied.
          */
 
         // Applied rule in dynamic programming:
@@ -25,18 +25,18 @@ public class RewardService {
         // rule = 2: Rule 2: 300 points for every $75 spend at Sport Check and $25 spend at Tim Hortons
         // rule = 3: Rule 4: 150 points for every $25 spend at Sport Check, $10 spend at Tim Hortons and $10 spend at Subway
         // rule = 4: Rule 6: 75 point for every $20 spend at Sport Check
-        // (Similiar to the items in knapsack problem)
+        // (Similar to the items in knapsack problem)
         int ruleNum = 4;
 
-        // To optimise space complexity, every capacity == 1 actually means 500 cents == 5 dollors
+        // To optimise space complexity, every capacity == 1 actually means 500 cents == 5 dollars
         // This would save 99.2% of the array space
         // NOTE: Remember in the dp loops every capacity++ means 5 dollars rise now
         int sportsCapacity = sportsAmount / 500;
         int timCapacity = timAmount / 500;
         int subwayCapacity = subwayAmount / 500;
 
-        // The capacity consumption for each rule (Similiar to the weights in knapsack problem)
-        // e.g. consumption[1] = {15, 5, 5} refers to Rule 1: Sport Check 15 ($75),
+        // The capacity consumption for each rule (Similar to the weights in knapsack problem)
+        // e.g. consumption[1] = {15, 5, 5} refers to Rule 1: Sport Check 15 ($75), Tim Hortons 5 ($25), Subway 5 ($25)
         int[][] consumption = {{0, 0, 0}, {15, 5, 5}, {15, 5, 0}, {5, 2, 2}, {4, 0, 0}};
 
         // The reward points owned if certain rule promotion is applied
@@ -101,9 +101,9 @@ public class RewardService {
 //        }
 
         // Dynamic programming
-        // Time Complexity: O(NXYZ), where N = number of rules, X = total transaction amount in Sport Check, Y = total transaction amount in Tim Hortons, Z = total transaction amount in Subway
-        // Space Complexity: O(NXYZ), but we could use some optimisation techniques to significantly reduce the actual space required
-        // Check project document for details
+        // Time Complexity: O(RABC), where R = number of rules, A = total transaction amount in Sport Check, B = total transaction amount in Tim Hortons, C = total transaction amount in Subway
+        // Space Complexity: O(ABC), but we could use some optimisation techniques to significantly reduce the actual space required
+        // Check Solution Explanation document for more details
         for (int rule = 1; rule <= ruleNum; rule ++) {
             for (int sc = 0; sc <= sportsCapacity; sc ++) {
                 for (int th = 0; th <= timCapacity; th ++) {
@@ -140,8 +140,9 @@ public class RewardService {
         float sportsLeftoverPoints = (float) (sportsAmount/100 - 5 * sportsUsedCapacity);
         float timLeftoverPoints = (float) (timAmount/100 - 5 * timUsedCapacity);
         float subwayLeftoverPoints = (float) (subwayAmount/100 - 5 * subwayUsedCapacity);
-        int finalLeftoverPoint = ((sportsAmount + timAmount + subwayAmount - 500 * (sportsUsedCapacity + timUsedCapacity + subwayUsedCapacity)) - (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints) * 100)/100;
-        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + finalLeftoverPoint + otherAmount/100);
+        int otherLeftoverPoints = otherAmount/100;
+        int finalLeftoverPoint = ((sportsAmount + timAmount + subwayAmount + otherAmount - 500 * (sportsUsedCapacity + timUsedCapacity + subwayUsedCapacity)) - (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + otherLeftoverPoints) * 100)/100;
+        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + otherLeftoverPoints + finalLeftoverPoint);
 
         // Decide where we should place the finalLeftoverPoint
         if (sportsPoints > 0 || sportsLeftoverPoints > 0) {
@@ -157,9 +158,7 @@ public class RewardService {
             timPoints += timLeftoverPoints;
             subwayPoints = subwayPoints + subwayLeftoverPoints  + finalLeftoverPoint;
         } else {
-            sportsPoints = sportsPoints + sportsLeftoverPoints + finalLeftoverPoint;
-            timPoints += timLeftoverPoints;
-            subwayPoints += subwayLeftoverPoints;
+            otherLeftoverPoints += finalLeftoverPoint;
         }
 
         // Pass calculation results to reward object
@@ -182,11 +181,13 @@ public class RewardService {
         System.out.println("Sports Leftover Amount: " + (sportsAmount - 500 * sportsUsedCapacity));
         System.out.println("Tim Leftover Amount: " + (timAmount - 500 * timUsedCapacity));
         System.out.println("Subway Leftover Amount: " + (subwayAmount - 500 * subwayUsedCapacity));
+        System.out.println("Other Leftover Amount: " + otherAmount);
         System.out.println("-------------------");
 
         System.out.println("Sports Leftover Points: " + sportsLeftoverPoints);
         System.out.println("Tim Leftover Points: " + timLeftoverPoints);
         System.out.println("Subway Leftover Points: " + subwayLeftoverPoints);
+        System.out.println("Other Leftover Point: " + otherLeftoverPoints);
         System.out.println("Final Leftover Point: " + finalLeftoverPoint);
         System.out.println("-------------------");
 
