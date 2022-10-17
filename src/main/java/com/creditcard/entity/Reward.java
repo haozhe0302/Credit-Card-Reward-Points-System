@@ -47,9 +47,7 @@ public class Reward {
         return sportsAmount;
     }
 
-    public Integer getTimAmount() {
-        return timAmount;
-    }
+    public Integer getTimAmount() { return timAmount; }
 
     public Integer getSubwayAmount() {
         return subwayAmount;
@@ -79,11 +77,11 @@ public class Reward {
         return timPoints/(float) timAmount;
     }
 
-    public Float getTotalAvgPointsRate() {
+    public Float getSubwayAvgPointsRate() {
         return subwayPoints/(float) subwayAmount;
     }
 
-    public Float getSubwayAvgPointsRate() {
+    public Float getTotalAvgPointsRate() {
         return (sportsPoints + timPoints + subwayPoints)/(float) (sportsAmount + timAmount + subwayAmount);
     }
 

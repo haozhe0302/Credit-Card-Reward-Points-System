@@ -69,13 +69,13 @@ public class RewardController {
                     for (Transactions transaction : transactionHistory) {
                         switch (transaction.getMerchantCode()) {
                             case "sportcheck":
-                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
                                 break;
                             case "tim_hortons":
-                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getTimAvgPointsRate())/100);
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getTimAvgPointsRate())/100);
                                 break;
                             case "subway":
-                                transaction.setRewardPoints((float) Math.round(100 * transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
                                 break;
                         }
                     }
