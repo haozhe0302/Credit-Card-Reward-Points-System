@@ -56,19 +56,19 @@ public class Reward {
     }
 
     public Float getSportsPoints() {
-        return sportsPoints;
+        return (float) Math.round(100 * sportsPoints)/100;
     }
 
     public Float getTimPoints() {
-        return timPoints;
+        return (float) Math.round(100 * timPoints)/100;
     }
 
     public Float getSubwayPoints() {
-        return subwayPoints;
+        return (float) Math.round(100 * subwayPoints)/100;
     }
 
-    public Float getTotalPoints() {
-        return sportsPoints + timPoints + subwayPoints;
+    public Integer getTotalPoints() {
+        return Math.round(100 * (sportsPoints + timPoints + subwayPoints))/100;
     }
 
     public Float getSportsAvgPointsRate() {
@@ -104,7 +104,7 @@ public class Reward {
     }
 
     public Integer getRule7Num() {
-        return rule6Num;
+        return rule7Num;
     }
 
     // Setter

@@ -11,7 +11,6 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,7 +79,22 @@ public class RewardController {
                         }
                     }
 
-                    model.addAttribute("dateByMonth", reward.getMonth());
+//                    model.addAttribute("dateByMonth", reward.getMonth());
+//                    model.addAttribute("totalPoints", reward.getTotalPoints());
+//                    model.addAttribute("sportsPoints", reward.getSportsPoints());
+//                    model.addAttribute("timPoints", reward.getTimPoints());
+//                    model.addAttribute("subwayPoints", reward.getSubwayPoints());
+//                    model.addAttribute("rule1Num", reward.getRule1Num());
+//                    model.addAttribute("rule2Num", reward.getRule2Num());
+//                    model.addAttribute("rule4Num", reward.getRule4Num());
+//                    model.addAttribute("rule6Num", reward.getRule6Num());
+//                    model.addAttribute("rule7Num", reward.getRule7Num());
+
+                    model.addAttribute("reward", reward);
+                    model.addAttribute("totalPoints", reward.getTotalPoints());
+                    model.addAttribute("sportsPoints", reward.getSportsPoints());
+                    model.addAttribute("timPoints", reward.getTimPoints());
+                    model.addAttribute("subwayPoints", reward.getSubwayPoints());
                     model.addAttribute("transactionHistory", transactionHistory);
                     return "reward_points_details";
                 }

@@ -13,35 +13,75 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <br><br><br>
-    <div class="border border-secondary rounded p-3" style="width: 60%; max-width: 1000px; min-width: 625px; margin: 0 auto">
+    <br>
+    <div class="border border-secondary rounded p-3" style="width: 75%; max-width: 1600px; min-width: 625px; margin: 0 auto">
         <h2>Your Reward Points Details</h2>
         <!-- Display Reward Info -->
         <div  style="width: 80%; min-width: 500px; margin: 0 auto">
-            <p>Date: [[${dateByMonth}]] Date: [[${dateByMonth}]] Date: [[${dateByMonth}]]</p>
+            <p>Month: [[${reward.month}]]</p>
+            <h3>Total Reward Points: [[${totalPoints}]]</h3><br>
+            <h5>Reward Contribution</h5>
+            <p>Sports Check: [[${sportsPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Tim Hortons: [[${timPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Subway: [[${subwayPoints}]]</p>
 
-        </div>
-
-        <!-- Display Transaction Info -->
-        <div  style="width: 80%; min-width: 500px; margin: 0 auto">
+            <h5>Promotion Applied</h5>
             <table class="table table-striped table-hover table-responsive-xl">
                 <thead class="table-dark">
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Date</th>
-                    <th>Merchant Code</th>
-                    <th>Amount Cents</th>
-                    <th>Reward Points</th>
-                </tr>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Description</th>
+                        <th>No.</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="transaction : ${transactionHistory}">
-                    <td th:text="${transaction.transactionId}"></td>
-                    <td th:text="${transaction.date}"></td>
-                    <td th:text="${transaction.merchantCode}"></td>
-                    <td th:text="${transaction.amountCents}"></td>
-                    <td th:text="${transaction.rewardPoints}"></td>
-                </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>500 points for every $75 spend at Sport Check, $25 spend at Tim Hortons and $25 spend at Subway</td>
+                        <td>[[${reward.rule1Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>300 points for every $75 spend at Sport Check and $25 spend at Tim Hortons</td>
+                        <td>[[${reward.rule2Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>150 points for every $25 spend at Sport Check, $10 spend at Tim Hortons and $10 spend at Subway</td>
+                        <td>[[${reward.rule4Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>75 point for every $20 spend at Sport Check</td>
+                        <td>[[${reward.rule6Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>1 points for every $1 spend for all other purchases (including leftover amount)</td>
+                        <td>[[${reward.rule7Num}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <!-- Display Transaction Info -->
+            <h5>Transaction Details</h5>
+            <table class="table table-striped table-hover table-responsive-xl">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Merchant Code</th>
+                        <th>Amount Cents</th>
+                        <th>Reward Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="transaction : ${transactionHistory}">
+                        <td th:text="${transaction.transactionId}"></td>
+                        <td th:text="${transaction.date}"></td>
+                        <td th:text="${transaction.merchantCode}"></td>
+                        <td th:text="${transaction.amountCents}"></td>
+                        <td th:text="${transaction.rewardPoints}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
