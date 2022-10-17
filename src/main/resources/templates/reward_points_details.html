@@ -16,6 +16,30 @@
     <br>
     <p><b>Your Reward Points Details</b></p>
 
+    <div>
+        <!--display users list-->
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Merchant Code</th>
+                <th>Amount Cents</th>
+                <th>Reward Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactionHistory}">
+                <td th:text="${transaction.transactionId}"></td>
+                <td th:text="${transaction.date}"></td>
+                <td th:text="${transaction.merchantCode}"></td>
+                <td th:text="${transaction.amountCents}"></td>
+                <td th:text="${transaction.rewardPoints}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <!-- Cute Poka Bird. just for fun.  -->
     <div class="poka" style="position: fixed; left: 0; bottom: 0; z-index: 2;">
         <a class="poka"><img src="https://cdn.hinatazaka46.com/files/14/hinata/pages/hinachri2020/assets/images/poka.gif" height="120" width="120"></a>

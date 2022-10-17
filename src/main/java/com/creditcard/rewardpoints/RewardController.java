@@ -24,7 +24,7 @@ public class RewardController {
     @PostMapping("/details")
     public String uploadCsvParse(@RequestParam("file") MultipartFile file, Model model) {
         // Validate file
-        if (! file.isEmpty()) {
+        if (!file.isEmpty()) {
             try {
                 Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 List<Transactions> transactionHistory = new CsvToBeanBuilder<Transactions>(reader).withType(Transactions.class).build().parse();
@@ -58,9 +58,9 @@ public class RewardController {
                 System.out.println("Tim Total Amount:" + timAmount);
                 System.out.println("Subway Total Amount:" + subwayAmount);
 
-                // Temporarily only one single month of transaction data is allowed. If not, raise warning to the user
+                // Temporarily only one single month of transaction input data is allowed. If not, raise warning to the user
                 if (dateByMonth.size() != 1) {
-                    System.out.println("dateByMonth.size() != 1");
+                    System.out.println("Warnig: dateByMonth.size() != 1");
                     // TODO: Return to home page and raise warning message to user
                 } else {
                     Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount);
@@ -80,6 +80,8 @@ public class RewardController {
                         }
                     }
 
+                    model.addAttribute("transactionHistory", transactionHistory);
+                    return "reward_points_details";
                 }
             } catch (Exception ex) {
                 model.addAttribute("message", "An error occurred while processing the CSV file.");
