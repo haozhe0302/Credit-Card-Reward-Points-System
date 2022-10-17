@@ -1,10 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
+
     <title>Details - Reward Points System</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
 </head>
 <body>
-    <h1>Reward Details</h1>
+<div class="container-fluid text-center">
+    <br>
+    <div class="border border-secondary rounded p-3" style="width: 75%; max-width: 1600px; min-width: 625px; margin: 0 auto">
+        <h2>Your Reward Points Details</h2>
+        <!-- Display Reward Info -->
+        <div  style="width: 80%; min-width: 500px; margin: 0 auto">
+            <p>Month: [[${reward.month}]]</p>
+            <h3>Total Reward Points: [[${totalPoints}]]</h3><br>
+            <h5>Reward Contribution</h5>
+            <p>Sports Check: [[${sportsPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Tim Hortons: [[${timPoints}]] &nbsp;&nbsp;&nbsp;&nbsp; Subway: [[${subwayPoints}]]</p>
+
+            <h5>Promotion Applied</h5>
+            <table class="table table-striped table-hover table-responsive-xl">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rule</th>
+                        <th>Description</th>
+                        <th>No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>500 points for every $75 spend at Sport Check, $25 spend at Tim Hortons and $25 spend at Subway</td>
+                        <td>[[${reward.rule1Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>300 points for every $75 spend at Sport Check and $25 spend at Tim Hortons</td>
+                        <td>[[${reward.rule2Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>150 points for every $25 spend at Sport Check, $10 spend at Tim Hortons and $10 spend at Subway</td>
+                        <td>[[${reward.rule4Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>75 point for every $20 spend at Sport Check</td>
+                        <td>[[${reward.rule6Num}]]</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>1 points for every $1 spend for all other purchases (including leftover amount)</td>
+                        <td>[[${reward.rule7Num}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <!-- Display Transaction Info -->
+            <h5>Transaction Details</h5>
+            <table class="table table-striped table-hover table-responsive-xl">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Merchant Code</th>
+                        <th>Amount Cents</th>
+                        <th>Reward Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="transaction : ${transactionHistory}">
+                        <td th:text="${transaction.transactionId}"></td>
+                        <td th:text="${transaction.date}"></td>
+                        <td th:text="${transaction.merchantCode}"></td>
+                        <td th:text="${transaction.amountCents}"></td>
+                        <td th:text="${transaction.rewardPoints}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Cute Poka Bird. just for fun.  -->
+    <div class="poka" style="position: fixed; left: 0; bottom: 0; z-index: 2;">
+        <a class="poka"><img src="https://cdn.hinatazaka46.com/files/14/hinata/pages/hinachri2020/assets/images/poka.gif" height="120" width="120"></a>
+    </div>
+</div>
 </body>
 </html>

@@ -5,14 +5,12 @@ import com.creditcard.entity.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.time.YearMonth;
 import java.util.*;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +23,7 @@ public class RewardController {
     @PostMapping("/details")
     public String uploadCsvParse(@RequestParam("file") MultipartFile file, Model model) {
         // Validate file
-        if (! file.isEmpty()) {
+        if (!file.isEmpty()) {
             try {
                 Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 List<Transactions> transactionHistory = new CsvToBeanBuilder<Transactions>(reader).withType(Transactions.class).build().parse();
@@ -33,14 +31,15 @@ public class RewardController {
                 int sportsAmount = 0;
                 int timAmount = 0;
                 int subwayAmount = 0;
-                // List<String> dateByMonth = new ArrayList<>();
+                HashSet<String> dateByMonth = new HashSet<>();
 
-                // Sum the monthly purchase amount for each merchant
                 for (Transactions transaction : transactionHistory) {
-                    String merchantCode = transaction.getMerchantCode();
-                    // dateByMonth.(transaction.getDate().substring(0, 10));
+                    // Distract date to yyyy/MM format
+                    String[] dateSplit = transaction.getDate().split("/");
+                    dateByMonth.add(dateSplit[0] + "/" + dateSplit[1]);
 
-                    switch (merchantCode) {
+                    // Sum the monthly purchase amount for each merchant
+                    switch (transaction.getMerchantCode()) {
                         case "sportcheck":
                             sportsAmount += transaction.getAmountCents();
                             break;
@@ -53,13 +52,52 @@ public class RewardController {
                     }
                 }
 
-                System.out.println(sportsAmount);
-                System.out.println(timAmount);
-                System.out.println(subwayAmount);
+                System.out.println("-------------------");
+                System.out.println("Sports Total Amount:" + sportsAmount);
+                System.out.println("Tim Total Amount:" + timAmount);
+                System.out.println("Subway Total Amount:" + subwayAmount);
 
-                YearMonth month = YearMonth.parse("2022-10");
-                Reward reward = rewardService.findMaxReward(month, sportsAmount, timAmount, subwayAmount);
+                // Temporarily only one single month of transaction input data is allowed. If not, raise warning to the user
+                if (dateByMonth.size() != 1) {
+                    System.out.println("Warnig: dateByMonth.size() != 1");
+                    // TODO: Return to home page and raise warning message to user
+                } else {
+                    Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount);
 
+                    // Calculate points contribution for each transaction
+                    for (Transactions transaction : transactionHistory) {
+                        switch (transaction.getMerchantCode()) {
+                            case "sportcheck":
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
+                                break;
+                            case "tim_hortons":
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getTimAvgPointsRate())/100);
+                                break;
+                            case "subway":
+                                transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
+                                break;
+                        }
+                    }
+
+//                    model.addAttribute("dateByMonth", reward.getMonth());
+//                    model.addAttribute("totalPoints", reward.getTotalPoints());
+//                    model.addAttribute("sportsPoints", reward.getSportsPoints());
+//                    model.addAttribute("timPoints", reward.getTimPoints());
+//                    model.addAttribute("subwayPoints", reward.getSubwayPoints());
+//                    model.addAttribute("rule1Num", reward.getRule1Num());
+//                    model.addAttribute("rule2Num", reward.getRule2Num());
+//                    model.addAttribute("rule4Num", reward.getRule4Num());
+//                    model.addAttribute("rule6Num", reward.getRule6Num());
+//                    model.addAttribute("rule7Num", reward.getRule7Num());
+
+                    model.addAttribute("reward", reward);
+                    model.addAttribute("totalPoints", reward.getTotalPoints());
+                    model.addAttribute("sportsPoints", reward.getSportsPoints());
+                    model.addAttribute("timPoints", reward.getTimPoints());
+                    model.addAttribute("subwayPoints", reward.getSubwayPoints());
+                    model.addAttribute("transactionHistory", transactionHistory);
+                    return "reward_points_details";
+                }
             } catch (Exception ex) {
                 model.addAttribute("message", "An error occurred while processing the CSV file.");
                 model.addAttribute("status", false);

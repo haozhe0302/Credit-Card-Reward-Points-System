@@ -3,13 +3,12 @@ package com.creditcard.rewardpoints;
 import com.creditcard.entity.Reward;
 import org.springframework.stereotype.Service;
 
-import java.time.*;
 import java.util.*;
 
 @Service
 public class RewardService {
 
-    public Reward findMaxReward (YearMonth month, Integer sportsAmount, Integer timAmount, Integer subwayAmount) {
+    public Reward findMaxReward (String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount) {
         /*
         Calculate the maximum reward points customer could get monthly by dynamic programming
 
@@ -112,6 +111,7 @@ public class RewardService {
         float timLeftoverPoints = (float) (timAmount/100 - 5 * timUsedCapacity);
         float subwayLeftoverPoints = (float) (subwayAmount/100 - 5 * subwayUsedCapacity);
         int finalLeftoverPoint = ((sportsAmount + timAmount + subwayAmount - 500 * (sportsUsedCapacity + timUsedCapacity + subwayUsedCapacity)) - (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints) * 100)/100;
+        int rule7Num = (int) (sportsLeftoverPoints + timLeftoverPoints + subwayLeftoverPoints + finalLeftoverPoint);
 
         // Decide where we should place the finalLeftoverPoint
         if (sportsPoints > 0 || sportsLeftoverPoints > 0) {
@@ -132,18 +132,10 @@ public class RewardService {
             subwayPoints += subwayLeftoverPoints;
         }
 
-        // Pass calculation results to reward
-        Reward reward = new Reward();
-        reward.setMonth(month);
-        reward.setSportsPoints(sportsPoints);
-        reward.setTimPoints(timPoints);
-        reward.setSubwayPoints(subwayPoints);
-        reward.setRule1Num(rule1Num);
-        reward.setRule2Num(rule2Num);
-        reward.setRule4Num(rule4Num);
-        reward.setRule6Num(rule6Num);
+        // Pass calculation results to reward object
+        Reward reward = new Reward(month, sportsAmount, timAmount, subwayAmount, sportsPoints, timPoints, subwayPoints, rule1Num, rule2Num, rule4Num, rule6Num, rule7Num);
 
-        // Output console test
+        // Test Use: output console display
         System.out.println("-------------------");
         System.out.println("Month: " + month.toString());
 
