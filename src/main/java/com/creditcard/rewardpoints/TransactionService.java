@@ -1,6 +1,6 @@
 package com.creditcard.rewardpoints;
 
-import com.creditcard.entity.Transaction;
+import com.creditcard.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -49,5 +49,26 @@ public class TransactionService {
         amountByCategory.add(otherAmount);
 
         return amountByCategory;
+    }
+
+    public List<Transaction> setPointsForEachTransaction (List<Transaction> transactionHistory, Reward reward) {
+        // Calculate points contribution for each transaction
+        for (Transaction transaction : transactionHistory) {
+            switch (transaction.getMerchantCode()) {
+                case "sportcheck":
+                    transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
+                    break;
+                case "tim_hortons":
+                    transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getTimAvgPointsRate())/100);
+                    break;
+                case "subway":
+                    transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSubwayAvgPointsRate())/100);
+                    break;
+                default:
+                    transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getOtherAvgPointsRate())/100);
+            }
+        }
+
+        return transactionHistory;
     }
 }
