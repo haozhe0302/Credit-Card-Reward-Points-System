@@ -2,9 +2,7 @@ package com.creditcard.entity;
 
 import com.opencsv.bean.CsvBindByName;
 
-import java.util.*;
-
-public class Transactions {
+public class Transaction {
     @CsvBindByName
     private Integer transactionId;
 
@@ -21,9 +19,9 @@ public class Transactions {
     private Float rewardPoints;
 
     // Constructor
-    public Transactions(){}
+    public Transaction(){}
 
-    public Transactions(Integer transactionId, String date, String merchantCode, Integer amountCents) {
+    public Transaction(Integer transactionId, String date, String merchantCode, Integer amountCents) {
         this.transactionId = transactionId;
         this.date = date;
         this.merchantCode = merchantCode;

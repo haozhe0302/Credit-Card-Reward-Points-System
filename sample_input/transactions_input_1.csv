@@ -1,0 +1,8 @@
+transactionId,date,merchantCode,amountCents
+1,2021/5/1,sportcheck,5000
+2,2021/5/2,sportcheck,3000
+3,2021/5/3,sportcheck,2000
+4,2021/5/4,tim_hortons,2500
+5,2021/5/5,subway,500
+6,2021/5/6,costco,10000
+7,2021/5/7,walmart,1500

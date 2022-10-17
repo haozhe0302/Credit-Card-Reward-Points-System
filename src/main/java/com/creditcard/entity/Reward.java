@@ -8,10 +8,12 @@ public class Reward {
     private Integer sportsAmount;
     private Integer timAmount;
     private Integer subwayAmount;
+    private Integer otherAmount;
 
     private Float sportsPoints;
     private Float timPoints;
     private Float subwayPoints;
+    private Float otherPoints;
 
     private Integer rule1Num;
     private Integer rule2Num;
@@ -22,16 +24,18 @@ public class Reward {
     // Constructor
     public Reward(){}
 
-    public Reward(String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num, Integer rule7Num) {
+    public Reward(String month, Integer sportsAmount, Integer timAmount, Integer subwayAmount, Integer otherAmount, Float sportsPoints, Float timPoints, Float subwayPoints, Integer rule1Num, Integer rule2Num, Integer rule4Num, Integer rule6Num, Integer rule7Num) {
         this.month = month;
 
         this.sportsAmount = sportsAmount;
         this.timAmount = timAmount;
         this.subwayAmount = subwayAmount;
+        this.otherAmount = otherAmount;
 
         this.sportsPoints = sportsPoints;
         this.timPoints = timPoints;
         this.subwayPoints = subwayPoints;
+        this.otherPoints = (float) (otherAmount/100);
 
         this.rule1Num = rule1Num;
         this.rule2Num = rule2Num;
@@ -55,6 +59,10 @@ public class Reward {
         return subwayAmount;
     }
 
+    public Integer getOtherAmount() {
+        return otherAmount;
+    }
+
     public Float getSportsPoints() {
         return (float) Math.round(100 * sportsPoints)/100;
     }
@@ -67,8 +75,12 @@ public class Reward {
         return (float) Math.round(100 * subwayPoints)/100;
     }
 
+    public Float getOtherPoints() {
+        return (float) Math.round(100 * otherPoints)/100;
+    }
+
     public Integer getTotalPoints() {
-        return Math.round(100 * (sportsPoints + timPoints + subwayPoints))/100;
+        return Math.round(100 * (sportsPoints + timPoints + subwayPoints + otherPoints))/100;
     }
 
     public Float getSportsAvgPointsRate() {
@@ -83,8 +95,12 @@ public class Reward {
         return subwayPoints/(float) subwayAmount;
     }
 
+    public Float getOtherAvgPointsRate() {
+        return otherPoints/(float) otherAmount;
+    }
+
     public Float getTotalAvgPointsRate() {
-        return (sportsPoints + timPoints + subwayPoints)/(float) (sportsAmount + timAmount + subwayAmount);
+        return (sportsPoints + timPoints + subwayPoints + otherPoints)/(float) (sportsAmount + timAmount + subwayAmount + otherAmount);
     }
 
     public Integer getRule1Num() {
@@ -108,6 +124,7 @@ public class Reward {
     }
 
     // Setter
+
     public void setMonth(String month) {
         this.month = month;
     }
@@ -124,6 +141,10 @@ public class Reward {
         this.subwayAmount = subwayAmount;
     }
 
+    public void setOtherAmount(Integer otherAmount) {
+        this.otherAmount = otherAmount;
+    }
+
     public void setSportsPoints(Float sportsPoints) {
         this.sportsPoints = sportsPoints;
     }
@@ -134,6 +155,10 @@ public class Reward {
 
     public void setSubwayPoints(Float subwayPoints) {
         this.subwayPoints = subwayPoints;
+    }
+
+    public void setOtherPoints(Float otherPoints) {
+        this.otherPoints = otherPoints;
     }
 
     public void setRule1Num(Integer rule1Num) {
@@ -153,6 +178,6 @@ public class Reward {
     }
 
     public void setRule7Num(Integer rule7Num) {
-        this.rule6Num = rule7Num;
+        this.rule7Num = rule7Num;
     }
 }
