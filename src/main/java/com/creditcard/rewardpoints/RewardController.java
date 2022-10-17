@@ -21,7 +21,7 @@ public class RewardController {
     private RewardService rewardService;
 
     @PostMapping("/details")
-    public String uploadCsvParse(@RequestParam("file") MultipartFile file, Model model) {
+    public String rewardDetails(@RequestParam("file") MultipartFile file, Model model) {
         // Validate file
         if (!file.isEmpty()) {
             try {
