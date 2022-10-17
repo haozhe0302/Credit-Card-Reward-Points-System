@@ -20,40 +20,24 @@ public class RewardController {
     @Autowired
     private RewardService rewardService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @PostMapping("/details")
     public String rewardDetails(@RequestParam("file") MultipartFile file, Model model) {
         // Validate file
         if (!file.isEmpty()) {
             try {
                 Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
-                List<Transactions> transactionHistory = new CsvToBeanBuilder<Transactions>(reader).withType(Transactions.class).build().parse();
+                List<Transaction> transactionHistory = new CsvToBeanBuilder<Transaction>(reader).withType(Transaction.class).build().parse();
 
-                int sportsAmount = 0;
-                int timAmount = 0;
-                int subwayAmount = 0;
-                int otherAmount = 0;
-                HashSet<String> dateByMonth = new HashSet<>();
+                HashSet<String> dateByMonth = transactionService.dateToMonth(transactionHistory);
 
-                for (Transactions transaction : transactionHistory) {
-                    // Distract date to yyyy/MM format
-                    String[] dateSplit = transaction.getDate().split("/");
-                    dateByMonth.add(dateSplit[0] + "/" + dateSplit[1]);
-
-                    // Sum the monthly purchase amount for each merchant
-                    switch (transaction.getMerchantCode()) {
-                        case "sportcheck":
-                            sportsAmount += transaction.getAmountCents();
-                            break;
-                        case "tim_hortons":
-                            timAmount += transaction.getAmountCents();
-                            break;
-                        case "subway":
-                            subwayAmount += transaction.getAmountCents();
-                            break;
-                        default:
-                            otherAmount += transaction.getAmountCents();
-                    }
-                }
+                List<Integer> amountInCategory = transactionService.amountCountByCategory(transactionHistory);
+                int sportsAmount = amountInCategory.get(0);
+                int timAmount = amountInCategory.get(1);
+                int subwayAmount = amountInCategory.get(2);
+                int otherAmount = amountInCategory.get(3);
 
                 System.out.println("-------------------");
                 System.out.println("Sports Total Amount:" + sportsAmount);
@@ -68,7 +52,7 @@ public class RewardController {
                     Reward reward = rewardService.findMaxReward(dateByMonth.iterator().next(), sportsAmount, timAmount, subwayAmount, otherAmount);
 
                     // Calculate points contribution for each transaction
-                    for (Transactions transaction : transactionHistory) {
+                    for (Transaction transaction : transactionHistory) {
                         switch (transaction.getMerchantCode()) {
                             case "sportcheck":
                                 transaction.setRewardPoints((float) Math.round(100 * (float) transaction.getAmountCents() * reward.getSportsAvgPointsRate())/100);
