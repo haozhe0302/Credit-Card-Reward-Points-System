@@ -1,8 +1,9 @@
 # Credit-Card-Reward-Points-System
 
-**Spring** project depending on **Java 8**, **Spring Web Service**, **JPA**, **Thymeleaf**, and **Bootstrap**.
+A **Java** project for calculating monthly reward points based on customer's transaction history, depending on **Spring**, **JPA**, **Thymeleaf**, and **Bootstrap**.
 
 Please read the following documents to get more details about how this credit card reward points system works.
+
 
 ## 0. Project Rquirement
 
